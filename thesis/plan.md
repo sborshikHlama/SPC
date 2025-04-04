@@ -1,51 +1,50 @@
-Revised Table of Contents
+Table of Contents
 Introduction
 
-Overview of Statistical Process Control (SPC) in Service Industries.
-Importance of Variability Reduction in Customer Service.
-Objectives and Scope of the Paper.
-Literature Review
+Overview of Statistical Process Control (SPC)
+Importance of SPC in Customer Experience Management
+Research Objectives and Structure of the Paper
+Foundations of Statistical Process Control
 
-2.1: Foundations of Statistical Process Control.
-Shewhart Control Charts, CUSUM, and EWMA in Theory.
-2.2: SPC Applications in Service Settings.
-Examples from customer interaction management, response time, and complaint resolution.
-Identification of Variability Factors in Customer Service
+Historical Background and Key Concepts
+Shewhart’s Control Chart Theory and its Evolution
+Common and Special Causes of Variation (​6-sigma-handnbook)
+Customer Experience and Quality Management
 
-3.1: Common Causes of Variability.
-Procedural inconsistencies, staff behavior, fluctuating demand.
-3.2: Special Causes of Variability.
-Unique events, system outages, training gaps.
-Methodology for Analyzing Customer Service Variability
+The Role of Total Quality Management (TQM) in Service Quality
+Understanding Process Control in Service-Based Industries (​Goetsch*organisational*…)
+Application of SPC in Customer Experience Management
 
-4.1: Data Collection and Performance Indicators.
-Response time, satisfaction scores, and complaint frequency.
-4.2: Selection of Statistical Tools.
-Justification for using Shewhart charts, CUSUM, and EWMA.
-Application of SPC Methods to Customer Service
+Measuring Customer Satisfaction with SPC
+Key Metrics and Statistical Techniques
+Implementation of Control Charts for Service Quality​Goetsch*organisational*…
+Process Capability and Continuous Improvement
 
-5.1: Baseline Analysis of Customer Service Performance.
-Current variability levels and trends.
-5.2: Implementation of SPC Techniques.
-Control chart setup and monitoring for selected indicators.
-Optimization Measures for Service Processes
+Understanding Process Capability Indices (Cp, Cpk)
+Using SPC to Reduce Variability in Service Processes
+Case Study: Improving Call Center Performance (​Goetsch*organisational*…)
+SPC Tools for Enhancing Customer Experience
 
-6.1: Proposals Based on SPC Findings.
-Standardizing response procedures and reducing bottlenecks.
-6.2: Adjustment and Validation.
-Statistical evaluation of the proposed measures.
-Evaluation of Results
+Flowcharts, Histograms, and Pareto Analysis
+Cause-and-Effect Diagrams for Root Cause Analysis
+Implementing Check Sheets and Scatter Diagrams (​Goetsch*organisational*…)
+Challenges in Applying SPC to Customer Experience
 
-7.1: Comparison of Pre- and Post-Implementation Data.
-7.2: Effectiveness of SPC Measures in Reducing Variability.
-Discussion
+Limitations of Traditional SPC in Service-Based Industries
+Overcoming Data Collection and Interpretation Issues
+Employee Involvement and Organizational Change
+Integration of SPC with Six Sigma and Lean
 
-8.1: Implications for Customer Service Quality.
-8.2: Study Limitations and Areas for Further Research.
-Case Studies and Practical Applications
+The Role of Six Sigma in Process Control​6-sigma-handnbook
+Synergies Between SPC, Lean, and Customer Experience
+Case Study: Implementing Lean Six Sigma in Customer Service
+Future Trends in SPC and Customer Experience
 
-Real-world examples demonstrating successful implementation of SPC in service industries.
+The Role of Artificial Intelligence and Predictive Analytics
+Automating SPC for Real-Time Customer Feedback Analysis
+Emerging Applications in Digital Customer Experience
 Conclusion
 
-Summary of Findings and Key Recommendations.
-Long-Term Benefits of SPC in Customer Service Optimization.
+Summary of Key Findings
+Implications for Businesses and Practitioners
+Recommendations for Future Research

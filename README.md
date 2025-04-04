@@ -1,4 +1,4 @@
-## This is a my thesis repo
+## This is a my SPC repo
 
 Thesis topic: Statistical process control 
 

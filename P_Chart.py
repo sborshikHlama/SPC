@@ -1,6 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
 import kagglehub
 import os
@@ -30,16 +29,15 @@ sample_df['LCL'] = sample_df['LCL'].clip(lower=0)
 sample_df['UCL'] = sample_df['UCL'].round(4)
 sample_df['LCL'] = sample_df['LCL'].round(4)
 
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(14, 6))
 plt.plot(sample_df.index + 1, sample_df['p'], marker='o', label=' Answer Rate (p)')
 plt.step(sample_df.index + 1, sample_df['UCL'], linestyle='--', color='red', label='Upper Limit (UCL)')
 plt.step(sample_df.index + 1, sample_df['LCL'], linestyle='--', color='green', label='Lower Limit (LCL)')
 plt.axhline(y=p_bar, color='gray', linestyle='-', label='Mean (p)')
-
 plt.title('P-chart Succes answer rate')
 plt.xlabel('Day')
 plt.ylabel('Answer Rate')
-plt.xticks(ticks=range(1, len(sample_df) + 1))
+# plt.xticks(ticks=range(1, len(sample_df) + 1))
 y_min = min(sample_df['LCL'].min(), sample_df['p'].min()) - 0.01
 y_max = max(sample_df['UCL'].max(), sample_df['p'].max()) + 0.01
 plt.ylim(y_min, y_max)

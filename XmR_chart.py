@@ -46,7 +46,7 @@ plt.plot(range(2, len(x_values) + 1), moving_ranges, marker='o', color='purple',
 plt.axhline(mr_bar, color='gray', linestyle='-', label='Mean mR')
 plt.axhline(UCL_mR, linestyle='--', color='red', label='UCL (mR)')
 plt.title('mR-chart: Moving Range (Response Time)')
-plt.xlabel('День')
+plt.xlabel('Day')
 plt.ylabel('|Δ of time| (seconds)')
 plt.grid(True)
 plt.legend()

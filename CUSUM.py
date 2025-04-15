@@ -4,45 +4,58 @@ import matplotlib.pyplot as plt
 import kagglehub
 import os
 
-path = kagglehub.dataset_download("satvicoder/call-center-data")
-
+path = kagglehub.dataset_download("drnimishadavis/call-center-performance-data")
 files = os.listdir(path)
-filename = next(f for f in files if f.endswith(".csv"))
+filename = next(f for f in files if f.endswith(".xlsx"))
 ful_path = os.path.join(path, filename)
-df = pd.read_csv(ful_path)
-cusum_df = df.head(60).copy()
-cusum_df['Answer Speed (Seconds)'] = pd.to_timedelta(cusum_df['Answer Speed (AVG)']).dt.total_seconds()
-cusum_df = cusum_df.dropna(subset=['Answer Speed (Seconds)'])
+df = pd.read_excel(ful_path)
 
-target = cusum_df['Answer Speed (Seconds)'].mean()
-sigma = cusum_df['Answer Speed (Seconds)'].std()
-k = 0.5 * sigma
-H = 5 * sigma
+df_cusum = df[['Date', 'Resolved']].dropna().copy()
+df_cusum['ResolvedBinary'] = df_cusum['Resolved'].str.upper().str.strip().apply(lambda x: 1 if x == 'Y' else 0)
+resolved_by_day = df_cusum.groupby(df_cusum['Date'].dt.date).agg(
+    p_i=('ResolvedBinary', 'mean')
+).reset_index()
 
-cusum_df['C+'] = 0.0
-cusum_df['C-'] = 0.0
-for i in range(1, len(cusum_df)):
-    x = cusum_df.loc[cusum_df.index[i], 'Answer Speed (Seconds)']
-    cusum_df.loc[cusum_df.index[i], 'C+'] = max(0, cusum_df.loc[cusum_df.index[i - 1], 'C+'] + (x - target - k))
-    cusum_df.loc[cusum_df.index[i], 'C-'] = max(0, cusum_df.loc[cusum_df.index[i - 1], 'C-'] + (target - x - k))
-    
-m = 10
-k = 0.5 * sigma
-xc = len(cusum_df)
-yc = cusum_df['C+'].iloc[-1]
+# Расчёт CUSUM
+mu_0 = resolved_by_day['p_i'].mean()
+resolved_by_day['CUSUM'] = (resolved_by_day['p_i'] - mu_0).cumsum()
+n = len(resolved_by_day)
+k = 0.5 * resolved_by_day['p_i'].std()
+h = 5 * k
 
-v_mask_x = [xc - m, xc, xc - m]
-v_mask_y = [yc + k * m, yc, yc - k * m]
+# Определим позиции для масок — равномерно от последней точки назад
+mask_indices = list(range(n - 1, -1, -7))[:4]  # каждые 7 шагов от конца, максимум 4 маски
 
+# Построение графика
 plt.figure(figsize=(14, 6))
-plt.plot(range(1, len(cusum_df) + 1), cusum_df['C+'], color='red', label='C+ (cumulative increase)')
-plt.plot(range(1, len(cusum_df) + 1), cusum_df['C-'], color='blue', label='C− (cumulative decrease)')
-plt.axhline(H, linestyle='--', color='black', label='Control limit H')
-plt.plot(v_mask_x, v_mask_y, linestyle='--', color='black', label='V-mask')
-plt.title('CUSUM Chart: Average Answer Time')
-plt.xlabel('Day')
-plt.ylabel('Cumulative Deviation (sec)')
+plt.plot(resolved_by_day['Date'], resolved_by_day['CUSUM'], marker='o', label='CUSUM', color='tab:blue')
+plt.axhline(0, color='green', linestyle='--', linewidth=1)
+
+# Наложение V-масок
+for idx in mask_indices:
+    center_date = resolved_by_day['Date'].iloc[idx]
+    center_y = resolved_by_day['CUSUM'].iloc[idx]
+
+    # Построение вперёд (5 дней)
+    forward_x = np.arange(1, 6)
+    future_dates = pd.date_range(start=center_date, periods=6, freq='D')[1:]
+
+    mask_upper_dates = pd.concat([pd.Series([center_date]), pd.Series(future_dates)])
+    mask_upper_values = pd.Series([center_y - h] + list(center_y - h + k * forward_x))
+
+    mask_lower_dates = pd.concat([pd.Series([center_date]), pd.Series(future_dates)])
+    mask_lower_values = pd.Series([center_y + h] + list(center_y + h - k * forward_x))
+
+    # Отрисовка маски
+    plt.plot(mask_upper_dates, mask_upper_values, linestyle='--', color='red', alpha=0.6)
+    plt.plot(mask_lower_dates, mask_lower_values, linestyle='--', color='red', alpha=0.6)
+
+
+plt.title('CUSUM Chart with Multiple Forward V-masks')
+plt.xlabel('Date')
+plt.ylabel('CUSUM Value')
+plt.xticks(rotation=45)
 plt.grid(True)
-plt.legend()
+plt.legend(['CUSUM', 'Center Line (0)', 'V-mask boundaries'], loc='upper left')
 plt.tight_layout()
 plt.show()
